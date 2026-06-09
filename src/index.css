@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+:root {
+	--text: #444240;
+	--text-h: #444240;
+	--bg: #f6f4f2;
+	--border: #e5e4e7;
+	--accent: #aa3bff;
+
+	color-scheme: light dark;
+	color: var(--text);
+	background: var(--bg);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--text: #444240;
+		--text-h: #444240;
+		--bg: #f6f4f2;
+		--border: #2e303a;
+		--accent: #c084fc;
+	}
+}
+
+#root {
+	height: 100vh;
+	overflow: hidden;
+}
+
+/* Full Calendar styling */
+.fc .fc-resource-timeline .fc-datagrid-cell,
+.fc .fc-resource-timeline .fc-timeline-lane {
+	height: 100px;
+}
+
+.fc .fc-resource-timeline .fc-timeline-slot {
+	height: 100px;
+}
+
+.fc .fc-timeline-event {
+	height: 50px;
+	line-height: 50px;
+}
+
+.fc .fc-timeline-lane,
+.fc .fc-datagrid-cell {
+	border-bottom: 2px solid #d1d5db;
+}
+
+.fc .fc-timeline-event {
+	margin-top: 4px;
+	margin-left: 4px;
+}
+
+.fc ::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.fc ::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.fc ::-webkit-scrollbar-thumb {
+	background: #c4b5fd;
+	border-radius: 4px;
+}
+
+.fc ::-webkit-scrollbar-thumb:hover {
+	background: #a78bfa;
+}
+
+.fc ::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+
+.fc ::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.fc ::-webkit-scrollbar-thumb {
+	background: #4b5563;
+	border-radius: 4px;
+}
+
+.fc ::-webkit-scrollbar-thumb:hover {
+	background: #374151;
+}
+
+.fc .fc-scroller {
+	scrollbar-color: #4b5563 transparent;
+	scrollbar-width: thin;
+}
