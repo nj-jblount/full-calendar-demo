@@ -1,11 +1,10 @@
 import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import listPlugin from "@fullcalendar/list";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
-import type { EventContentArg } from "@fullcalendar/core";
+import { type EventClickArg, type EventContentArg } from "@fullcalendar/core";
+import EventModal from "./event-modal";
 
 import { tailNumbers, events } from "../../data";
+import { useState } from "react";
 
 const fmt = (d: Date) =>
 	d.toLocaleTimeString("en-US", {
@@ -43,37 +42,54 @@ function renderEventContent(arg: EventContentArg) {
 }
 
 export const Calendar = () => {
+	const [toggleEventModal, setToggleEventModal] = useState<boolean>(false);
+	const [selectedEvent, setSelectedEvent] = useState<EventClickArg | null>(
+		null
+	);
+
 	return (
-		<FullCalendar
-			schedulerLicenseKey="CC-Attribution-NonCommercial-NoDerivatives"
-			plugins={[
-				dayGridPlugin,
-				listPlugin,
-				timeGridPlugin,
-				resourceTimelinePlugin,
-			]}
-			initialView="resourceTimelineMonth"
-			height="100%"
-			headerToolbar={false}
-			slotLabelFormat={{
-				day: "numeric",
-				weekday: "short",
-			}}
-			views={{
-				resourceTimelineDay: {
-					slotDuration: "01:00:00",
-					slotLabelFormat: {
-						hour: "numeric",
-						minute: "2-digit",
-						omitZeroMinute: true,
-						meridiem: "short",
+		<>
+			<FullCalendar
+				schedulerLicenseKey="CC-Attribution-NonCommercial-NoDerivatives"
+				plugins={[resourceTimelinePlugin]}
+				initialView="resourceTimelineMonth"
+				height="100%"
+				headerToolbar={{
+					start: "title",
+					center:
+						"resourceTimelineDay resourceTimelineWeek resourceTimelineMonth",
+					end: "today prev,next",
+				}}
+				slotLabelFormat={{
+					day: "numeric",
+					weekday: "short",
+				}}
+				views={{
+					resourceTimelineDay: {
+						slotDuration: "01:00:00",
+						slotLabelFormat: {
+							hour: "numeric",
+							minute: "2-digit",
+							omitZeroMinute: true,
+							meridiem: "short",
+						},
 					},
-				},
-			}}
-			resourceAreaHeaderContent="Aircraft"
-			resources={tailNumbers}
-			events={events}
-			eventContent={renderEventContent}
-		/>
+				}}
+				resourceAreaHeaderContent="Aircraft"
+				resources={tailNumbers}
+				events={events}
+				eventContent={renderEventContent}
+				eventMaxStack={5}
+				eventClick={(args) => {
+					setSelectedEvent(args);
+					setToggleEventModal(true);
+				}}
+			/>
+			<EventModal
+				args={selectedEvent}
+				toggleEventModal={toggleEventModal}
+				setToggleEventModal={setToggleEventModal}
+			/>
+		</>
 	);
 };
